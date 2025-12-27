@@ -49,3 +49,5 @@ htmlcov/
 *.tmp
 *.bak
 
+# Dashboard (separate private repo)
+dashboard/
