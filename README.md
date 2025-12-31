@@ -66,47 +66,60 @@ Scripts and examples demonstrate concepts using Python pseudocode that works acr
 
 ### Usage with Claude Code
 
-This repository is configured as a **Claude Code Plugin Marketplace**, allowing you to load context engineering skills directly into your agent development environment.
+This repository is a **Claude Code Plugin** containing context engineering skills that Claude automatically discovers and activates based on your task context.
 
 ### Installation
 
-1. **Add the Marketplace**
-   Run this command in Claude Code to add this repository as a plugin source:
-   ```bash
-   /plugin marketplace add muratcankoylan/Agent-Skills-for-Context-Engineering
-   ```
+**Option 1: Test Locally (Recommended for Development)**
 
-2. **Browse and Install**
-   You can browse available plugins:
-   - Select `Browse and install plugins`
-   - Select `context-engineering-marketplace`
-   - Choose any skill you want to install
-   - Select `Install now`
+Clone the repository and run Claude Code with the plugin directory:
 
-3. **Direct Install**
-   Or install individual skills directly via command:
-   ```bash
-   /plugin install context-fundamentals@context-engineering-marketplace
-   /plugin install tool-design@context-engineering-marketplace
-   /plugin install digital-brain@context-engineering-marketplace
-   ```
+```bash
+git clone https://github.com/muratcankoylan/Agent-Skills-for-Context-Engineering.git
+claude --plugin-dir ./Agent-Skills-for-Context-Engineering
+```
+
+Or if you already have the repo cloned:
+
+```bash
+claude --plugin-dir /path/to/agentproductionskills
+```
+
+**Option 2: Install from GitHub**
+
+```bash
+/plugin install github:muratcankoylan/Agent-Skills-for-Context-Engineering
+```
+
+### Testing the Plugin
+
+Once installed, skills activate automatically based on your queries. Try these:
+
+```
+# Triggers context-fundamentals skill:
+"Help me understand context windows"
+
+# Triggers multi-agent-patterns skill:
+"Design a multi-agent architecture"
+
+# Triggers tool-design skill:
+"Create agent tools"
+```
 
 **Available Skills:**
 
-| Skill | Description |
+| Skill | Triggers On |
 |-------|-------------|
-| `context-fundamentals` | Context window mechanics and constraints |
-| `context-degradation` | Patterns of context failure and mitigation |
-| `context-compression` | Compression strategies for long sessions |
-| `context-optimization` | Optimization techniques for context capacity |
-| `multi-agent-patterns` | Multi-agent architecture design |
-| `memory-systems` | Memory architectures for agent systems |
-| `tool-design` | Designing effective agent tools |
-| `evaluation` | Evaluation frameworks for agents |
-| `advanced-evaluation` | LLM-as-a-Judge techniques |
-| `project-development` | LLM project development methodology |
-| `digital-brain` | Personal knowledge management system |
-| `book-sft-pipeline` | Style-transfer fine-tuning pipeline |
+| `context-fundamentals` | "understand context", "explain context windows", "design agent architecture" |
+| `context-degradation` | "diagnose context problems", "fix lost-in-middle", "debug agent failures" |
+| `context-compression` | "compress context", "summarize conversation", "reduce token usage" |
+| `context-optimization` | "optimize context", "reduce token costs", "implement KV-cache" |
+| `multi-agent-patterns` | "design multi-agent system", "implement supervisor pattern" |
+| `memory-systems` | "implement agent memory", "build knowledge graph", "track entities" |
+| `tool-design` | "design agent tools", "reduce tool complexity", "implement MCP tools" |
+| `evaluation` | "evaluate agent performance", "build test framework", "measure quality" |
+| `advanced-evaluation` | "implement LLM-as-judge", "compare model outputs", "mitigate bias" |
+| `project-development` | "start LLM project", "design batch pipeline", "evaluate task-model fit" |
 
 <img width="1014" height="894" alt="Screenshot 2025-12-26 at 12 34 47 PM" src="https://github.com/user-attachments/assets/f79aaf03-fd2d-4c71-a630-7027adeb9bfe" />
 
