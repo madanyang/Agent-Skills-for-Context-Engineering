@@ -10,32 +10,76 @@
   },
   "plugins": [
     {
-      "name": "context-engineering-skills",
-      "description": "Core context engineering skills covering fundamentals, degradation patterns, compression, optimization, multi-agent patterns, memory systems, tool design, evaluation, and project development",
-      "source": "./",
-      "strict": false,
-      "skills": [
-        "./skills/context-fundamentals",
-        "./skills/context-degradation",
-        "./skills/context-compression",
-        "./skills/context-optimization",
-        "./skills/multi-agent-patterns",
-        "./skills/memory-systems",
-        "./skills/tool-design",
-        "./skills/evaluation",
-        "./skills/advanced-evaluation",
-        "./skills/project-development"
-      ]
+      "name": "context-fundamentals",
+      "description": "Understand the components, mechanics, and constraints of context in agent systems. Use when designing agent architectures, debugging context-related failures, or optimizing context usage.",
+      "source": "./skills/context-fundamentals",
+      "version": "1.0.0"
     },
     {
-      "name": "example-skills",
-      "description": "Complete example implementations demonstrating context engineering principles including digital brain PKM, book SFT pipeline, and LLM-as-Judge evaluation system",
-      "source": "./",
-      "strict": false,
-      "skills": [
-        "./examples/digital-brain-skill",
-        "./examples/book-sft-pipeline"
-      ]
+      "name": "context-degradation",
+      "description": "Recognize, diagnose, and mitigate patterns of context degradation in agent systems. Use when context grows large, agent performance degrades unexpectedly, or debugging agent failures.",
+      "source": "./skills/context-degradation",
+      "version": "1.0.0"
+    },
+    {
+      "name": "context-compression",
+      "description": "Design and evaluate context compression strategies for long-running agent sessions. Use when agents exhaust memory, need to summarize conversation history, or when optimizing tokens-per-task.",
+      "source": "./skills/context-compression",
+      "version": "1.0.0"
+    },
+    {
+      "name": "context-optimization",
+      "description": "Apply optimization techniques to extend effective context capacity. Use when context limits constrain agent performance, when optimizing for cost or latency, or implementing long-running agent systems.",
+      "source": "./skills/context-optimization",
+      "version": "1.0.0"
+    },
+    {
+      "name": "multi-agent-patterns",
+      "description": "Design multi-agent architectures for complex tasks. Use when single-agent context limits are exceeded, when tasks decompose naturally into subtasks, or when specializing agents improves quality.",
+      "source": "./skills/multi-agent-patterns",
+      "version": "1.0.0"
+    },
+    {
+      "name": "memory-systems",
+      "description": "Design and implement memory architectures for agent systems. Use when building agents that need to persist state across sessions, maintain entity consistency, or reason over structured knowledge.",
+      "source": "./skills/memory-systems",
+      "version": "1.0.0"
+    },
+    {
+      "name": "tool-design",
+      "description": "Design tools that agents can use effectively, including when to reduce tool complexity. Use when creating, optimizing, or reducing agent tool sets.",
+      "source": "./skills/tool-design",
+      "version": "1.0.0"
+    },
+    {
+      "name": "evaluation",
+      "description": "Build evaluation frameworks for agent systems. Use when testing agent performance, validating context engineering choices, or measuring improvements over time.",
+      "source": "./skills/evaluation",
+      "version": "1.0.0"
+    },
+    {
+      "name": "advanced-evaluation",
+      "description": "Master LLM-as-a-Judge evaluation techniques including direct scoring, pairwise comparison, rubric generation, and bias mitigation. Use when building evaluation systems or comparing model outputs.",
+      "source": "./skills/advanced-evaluation",
+      "version": "1.0.0"
+    },
+    {
+      "name": "project-development",
+      "description": "Design and build LLM-powered projects from ideation through deployment. Use when starting new agent projects, choosing between LLM and traditional approaches, or structuring batch processing pipelines.",
+      "source": "./skills/project-development",
+      "version": "1.0.0"
+    },
+    {
+      "name": "digital-brain",
+      "description": "Personal knowledge management system for founders, creators, and builders. Manages personal brand, content creation, network relationships, goals, and provides voice/tone consistency.",
+      "source": "./examples/digital-brain-skill",
+      "version": "1.0.0"
+    },
+    {
+      "name": "book-sft-pipeline",
+      "description": "End-to-end system for creating supervised fine-tuning datasets from books and training style-transfer models. Covers text extraction, segmentation, instruction generation, and LoRA training.",
+      "source": "./examples/book-sft-pipeline",
+      "version": "2.0.0"
     }
   ]
 }

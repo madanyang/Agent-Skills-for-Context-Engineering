@@ -80,22 +80,33 @@ This repository is configured as a **Claude Code Plugin Marketplace**, allowing 
    You can browse available plugins:
    - Select `Browse and install plugins`
    - Select `context-engineering-marketplace`
-   - Select `context-engineering-skills` or `example-skills`
+   - Choose any skill you want to install
    - Select `Install now`
 
 3. **Direct Install**
-   Or install plugins directly via command:
+   Or install individual skills directly via command:
    ```bash
-   /plugin install context-engineering-skills@context-engineering-marketplace
-   /plugin install example-skills@context-engineering-marketplace
+   /plugin install context-fundamentals@context-engineering-marketplace
+   /plugin install tool-design@context-engineering-marketplace
+   /plugin install digital-brain@context-engineering-marketplace
    ```
 
-**Available Plugins:**
+**Available Skills:**
 
-| Plugin | Description | Skills Included |
-|--------|-------------|-----------------|
-| `context-engineering-skills` | Core context engineering skills | context-fundamentals, context-degradation, context-compression, context-optimization, multi-agent-patterns, memory-systems, tool-design, evaluation, advanced-evaluation, project-development |
-| `example-skills` | Complete example implementations | digital-brain-skill, book-sft-pipeline |
+| Skill | Description |
+|-------|-------------|
+| `context-fundamentals` | Context window mechanics and constraints |
+| `context-degradation` | Patterns of context failure and mitigation |
+| `context-compression` | Compression strategies for long sessions |
+| `context-optimization` | Optimization techniques for context capacity |
+| `multi-agent-patterns` | Multi-agent architecture design |
+| `memory-systems` | Memory architectures for agent systems |
+| `tool-design` | Designing effective agent tools |
+| `evaluation` | Evaluation frameworks for agents |
+| `advanced-evaluation` | LLM-as-a-Judge techniques |
+| `project-development` | LLM project development methodology |
+| `digital-brain` | Personal knowledge management system |
+| `book-sft-pipeline` | Style-transfer fine-tuning pipeline |
 
 <img width="1014" height="894" alt="Screenshot 2025-12-26 at 12 34 47 PM" src="https://github.com/user-attachments/assets/f79aaf03-fd2d-4c71-a630-7027adeb9bfe" />
 
