@@ -190,7 +190,7 @@ The [book-sft-pipeline](examples/book-sft-pipeline/) example demonstrates traini
 Integrates with context engineering skills: project-development, context-compression, multi-agent-patterns, evaluation.
 
 ## Star History
-<img width="3664" height="2648" alt="star-history-202612" src="https://github.com/user-attachments/assets/53c26f6d-45c5-49dd-b050-ab2246132beb" />
+<img width="3664" height="2648" alt="star-history-202617" src="https://github.com/user-attachments/assets/651e069d-3ed8-42a4-a42a-ccac3df4e788" />
 
 ## Structure
 
