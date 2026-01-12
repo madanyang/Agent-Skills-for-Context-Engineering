@@ -145,16 +145,16 @@ for pattern in analysis.patterns:
 
 ```
 ┌─────────────────────────────────────────────────────────────────────────┐
-│                       OPTIMIZATION LOOP                                  │
-│                                                                          │
-│   ┌──────────┐    ┌──────────┐    ┌──────────┐    ┌──────────┐         │
-│   │  Agent   │───▶│ Capture  │───▶│ Analyze  │───▶│ Optimize │         │
-│   │ Execute  │    │ Traces   │    │ Patterns │    │  Prompt  │         │
-│   └──────────┘    └──────────┘    └──────────┘    └──────────┘         │
+│                       OPTIMIZATION LOOP                                 │
+│                                                                         │
+│   ┌──────────┐    ┌──────────┐    ┌──────────┐    ┌──────────┐          │
+│   │  Agent   │───▶│ Capture  │───▶│ Analyze  │───▶│ Optimize │          │
+│   │ Execute  │    │ Traces   │    │ Patterns │    │  Prompt  │          │
+│   └──────────┘    └──────────┘    └──────────┘    └──────────┘          │
 │        ▲                                               │                │
 │        └───────────────────────────────────────────────┘                │
 │                       (loop until converged or max iterations)          │
-│                                                                          │
+│                                                                         │
 │   Convergence: Score improvement < threshold OR score > target          │
 └─────────────────────────────────────────────────────────────────────────┘
 ```
