@@ -330,9 +330,10 @@ def validate_context_structure(context: Dict[str, Any]) -> Dict[str, Any]:
     issues: List[str] = []
     recommendations: List[str] = []
 
-    # Check for empty sections
+    # Check for empty sections (skip list-type values like documents
+    # which are legitimately empty when no documents are retrieved)
     for section, content in context.items():
-        if not content:
+        if content is None or (isinstance(content, str) and not content):
             issues.append(f"Empty {section} section")
             recommendations.append(f"Remove or populate {section}")
 

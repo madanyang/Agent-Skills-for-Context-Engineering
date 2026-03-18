@@ -22,7 +22,7 @@ Activate this skill when:
 - Implementing reasoning over accumulated knowledge
 - Designing memory architectures that scale in production
 - Evaluating memory systems against benchmarks (LoCoMo, LongMemEval, DMR)
-- Building dynamic memory with automatic entity/relationship extraction and self-improving(Cognee)
+- Building dynamic memory with automatic entity/relationship extraction and self-improving memory (Cognee)
 
 ## Core Concepts
 

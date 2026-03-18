@@ -578,9 +578,13 @@ if __name__ == "__main__":
         # Agent work happens here...
 
         # End session and get snapshot for follow-up
-        snapshot_id: Optional[str] = await manager.end_session(
-            f"{user.id}_{sandbox.created_at}"
-        )
-        print(f"Session ended, snapshot: {snapshot_id}")
+        # Find the session_id that was generated during start_session
+        active_ids = list(manager.active_sessions.keys())
+        if active_ids:
+            session_id = active_ids[0]
+            snapshot_id: Optional[str] = await manager.end_session(session_id)
+            print(f"Session ended, snapshot: {snapshot_id}")
+        else:
+            print("No active session found")
 
     asyncio.run(_demo())

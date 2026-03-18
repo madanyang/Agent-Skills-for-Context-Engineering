@@ -70,15 +70,14 @@ Implement version filtering to exclude outdated information before it enters con
 Use these benchmarks to set design constraints — not as universal truths. The RULER benchmark found only 50% of models claiming 32K+ context maintain satisfactory performance at that length. Near-perfect needle-in-haystack scores do not predict real-world long-context performance.
 
 **Model-Specific Degradation Thresholds**
-| Model | Degradation Onset | Severe Degradation | Notes |
-|-------|-------------------|-------------------|-------|
-| GPT-5.2 | ~64K tokens | ~200K tokens | Best overall degradation resistance with thinking mode |
-| Claude Opus 4.5 | ~100K tokens | ~180K tokens | 200K context window, strong attention management |
-| Claude Sonnet 4.5 | ~80K tokens | ~150K tokens | Optimized for agents and coding tasks |
-| Gemini 3 Pro | ~500K tokens | ~800K tokens | 1M context window, native multimodality |
-| Gemini 3 Flash | ~300K tokens | ~600K tokens | 3x speed of Gemini 2.5, 81.2% MMMU-Pro |
 
-Select models based on failure mode tolerance: Claude 4.5 series refuses or asks clarification rather than fabricating (lowest hallucination rates); GPT-5.2 thinking mode reduces hallucination through step-by-step verification at higher latency; Gemini 3 series handles the largest raw contexts but follow model-specific degradation curves.
+Degradation onset varies significantly by model family and task type. As a general rule, expect degradation to begin at 60-70% of the advertised context window for complex retrieval tasks (RULER benchmark found only 50% of models claiming 32K+ context maintain satisfactory performance at that length). Key patterns:
+
+- **Models with extended thinking** reduce hallucination through step-by-step verification but at higher latency and token cost
+- **Models optimized for agents/coding** tend to have better attention management for tool-output-heavy contexts
+- **Models with very large context windows (1M+)** handle more raw context but still follow U-shaped degradation curves — bigger windows do not eliminate the problem, they delay it
+
+Always benchmark degradation thresholds with your specific workload rather than relying on published benchmarks. Model-specific thresholds go stale with each model update (see Gotcha 2).
 
 ### Counterintuitive Findings
 

@@ -273,9 +273,9 @@ Related skills in this collection:
 - multi-agent-patterns - Read when: designing agent coordination with shared file workspaces
 
 External resources:
-- LangChain Deep Agents: How agents can use filesystems for context engineering
-- Cursor: Dynamic context discovery patterns
-- Anthropic: Agent Skills specification
+- LangChain Deep Agents — Read when: implementing filesystem-based context patterns in LangChain/LangGraph pipelines
+- Cursor context discovery — Read when: studying how production IDEs implement dynamic context loading
+- Anthropic Agent Skills specification — Read when: building skills that leverage filesystem progressive disclosure
 
 ---
 

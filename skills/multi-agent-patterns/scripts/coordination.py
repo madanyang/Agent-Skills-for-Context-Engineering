@@ -240,6 +240,11 @@ class SupervisorAgent:
 
         Use when: running an end-to-end supervised pipeline that decomposes
         a task, assigns subtasks, collects results, and aggregates them.
+
+        Note: This is a synchronous simulation. Workers do not execute
+        asynchronously — each subtask is simulated inline. In production,
+        replace ``_simulate_worker_response`` with actual async worker
+        execution and message passing.
         """
         subtasks = self.decompose_task(task)
 
@@ -247,6 +252,19 @@ class SupervisorAgent:
         for subtask in subtasks:
             worker = self.select_worker(subtask)
             self.assign_task(subtask, worker)
+
+            # Simulate worker executing and responding
+            response = self._simulate_worker_response(worker, subtask)
+            self.communication.send(
+                AgentMessage(
+                    sender=worker,
+                    receiver=self.name,
+                    message_type=MessageType.RESPONSE,
+                    content=response,
+                )
+            )
+            self.workers[worker]["status"] = "available"
+            self.workers[worker]["metrics"]["tasks_completed"] += 1
 
             messages = self.communication.receive(self.name)
             for msg in messages:
@@ -260,6 +278,21 @@ class SupervisorAgent:
             "subtask_results": results,
             "final_result": final_result,
             "success": final_result["quality_score"] >= 0.8,
+        }
+
+    def _simulate_worker_response(
+        self, worker_id: str, subtask: Dict[str, Any]
+    ) -> Dict[str, Any]:
+        """Simulate a worker completing a subtask.
+
+        In production, replace with actual agent execution that sends
+        the subtask to a worker process and awaits a real response.
+        """
+        return {
+            "success": True,
+            "summary": f"{worker_id} completed: {subtask.get('description', subtask.get('type', 'task'))}",
+            "worker": worker_id,
+            "subtask_type": subtask.get("type"),
         }
 
     def _send(self, message: AgentMessage) -> None:

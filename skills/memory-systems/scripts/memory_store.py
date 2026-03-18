@@ -161,10 +161,11 @@ class VectorStore:
 
         In production, replace with an actual embedding model. This
         deterministic stub uses the text hash as a random seed so that
-        identical texts always produce identical vectors.
+        identical texts always produce identical vectors. Uses a local
+        RNG to avoid corrupting global numpy random state.
         """
-        np.random.seed(hash(text) % (2**32))
-        return np.random.randn(self.dimension)
+        rng = np.random.default_rng(hash(text) % (2**32))
+        return rng.standard_normal(self.dimension)
 
     def _time_key(self, timestamp: Any) -> str:
         """Create time key for indexing."""
@@ -224,15 +225,13 @@ class PropertyGraph:
         Use when: adding a new entity to the graph that does not need
         identity deduplication (prefer get_or_create_node otherwise).
         """
-        import time
-
-        node_id: str = hashlib.md5(f"{label}{time.time()}".encode()).hexdigest()[:16]
+        node_id: str = hashlib.md5(f"{label}{datetime.now().isoformat()}".encode()).hexdigest()[:16]
 
         self.nodes[node_id] = {
             "id": node_id,
             "label": label,
             "properties": properties or {},
-            "created_at": time.time(),
+            "created_at": datetime.now().isoformat(),
         }
 
         if label not in self.node_index:
@@ -253,15 +252,13 @@ class PropertyGraph:
         Use when: recording a connection between two entities (e.g.,
         WORKS_AT, LIVES_IN, DEPENDS_ON).
         """
-        import time
-
         if source_id not in self.nodes:
             raise ValueError(f"Unknown source node: {source_id}")
         if target_id not in self.nodes:
             raise ValueError(f"Unknown target node: {target_id}")
 
         edge_id: str = hashlib.md5(
-            f"{source_id}{rel_type}{target_id}{time.time()}".encode()
+            f"{source_id}{rel_type}{target_id}{datetime.now().isoformat()}".encode()
         ).hexdigest()[:16]
 
         self.edges[edge_id] = {
@@ -270,7 +267,7 @@ class PropertyGraph:
             "target": target_id,
             "type": rel_type,
             "properties": properties or {},
-            "created_at": time.time(),
+            "created_at": datetime.now().isoformat(),
         }
 
         if rel_type not in self.edge_index:

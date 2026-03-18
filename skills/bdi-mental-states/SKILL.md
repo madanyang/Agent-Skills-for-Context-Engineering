@@ -297,6 +297,15 @@ Internal references:
 - [Framework Integration](./references/framework-integration.md) - Read when: deploying BDI models to SEMAS, JADE, or LAG pipelines
 
 Primary sources:
-- Zuppiroli et al. "The Belief-Desire-Intention Ontology" (2025)
-- Rao & Georgeff "BDI agents: From theory to practice" (1995)
-- Bratman "Intention, plans, and practical reason" (1987)
+- Zuppiroli et al. "The Belief-Desire-Intention Ontology" (2025) — Read when: implementing formal BDI class hierarchies or validating ontology alignment
+- Rao & Georgeff "BDI agents: From theory to practice" (1995) — Read when: understanding the theoretical foundations of practical reasoning agents
+- Bratman "Intention, plans, and practical reason" (1987) — Read when: grounding implementation decisions in the philosophical basis of intentionality
+
+---
+
+## Skill Metadata
+
+**Created**: 2026-01-07
+**Last Updated**: 2026-03-17
+**Author**: Agent Skills for Context Engineering Contributors
+**Version**: 2.0.0

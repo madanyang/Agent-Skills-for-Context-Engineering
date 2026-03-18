@@ -195,9 +195,17 @@ def summarize_conversation(content: str, max_length: int = 500) -> str:
 
     summary_parts = []
     if decisions:
-        summary_parts.append(f"Decisions: {len(decisions)} made")
+        decision_texts = [d.strip() for d in decisions[:5]]
+        summary_parts.append(f"Decisions: {'; '.join(decision_texts)}")
     if questions:
-        summary_parts.append(f"Questions: {len(questions)} raised")
+        question_texts = [q.strip() for q in questions[:3]]
+        summary_parts.append(f"Open questions: {'; '.join(question_texts)}")
+
+    if not summary_parts:
+        # Fallback: extract the first few substantive sentences
+        sentences = [s.strip() for s in content.split('.') if len(s.strip()) > 20]
+        if sentences:
+            summary_parts.append('. '.join(sentences[:3]) + '.')
 
     result = " | ".join(summary_parts) if summary_parts else "[Conversation summarized]"
     return result[:max_length]

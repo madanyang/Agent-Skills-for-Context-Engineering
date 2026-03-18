@@ -27,12 +27,11 @@ The article says the most powerful thing you can give Claude is **code it can co
 
 **The shift**: Our skills teach Claude *about* context engineering. The article suggests skills should help Claude *do* context engineering.
 
-### 2. No Gotchas sections (69% of skills)
+### 2. ~~No Gotchas sections (69% of skills)~~ — RESOLVED
 
-The article is unambiguous: *"The highest-signal content in any skill is the Gotchas section."* Only 4 of 13 skills have one. The root cause is our `template/SKILL.md` doesn't include a Gotchas section — so new skills never get one by default.
+> **Status**: Fixed in commit c847b20. All 13 skills now have standardized Gotchas sections (5-9 gotchas each). Template updated with canonical Gotchas section.
 
-**Skills WITH Gotchas (4):** bdi-mental-states, memory-systems, project-development, tool-design
-**Skills WITHOUT Gotchas (9):** advanced-evaluation, context-compression, context-degradation, context-fundamentals, context-optimization, evaluation, filesystem-context, hosted-agents, multi-agent-patterns
+~~The article is unambiguous: *"The highest-signal content in any skill is the Gotchas section."* Only 4 of 13 skills had one. The root cause was our `template/SKILL.md` didn't include a Gotchas section — so new skills never got one by default.~~
 
 ### 3. No on-demand hooks
 

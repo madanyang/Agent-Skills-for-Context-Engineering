@@ -204,13 +204,21 @@ class AgentEvaluator:
             required: List[str] = task.get("requirements", [])
             if required:
                 covered = sum(1 for r in required if r.lower() in output_lower)
-                return min(1.0, covered / len(required) + 0.2)
+                return covered / len(required)
             return 0.8
 
         elif dimension.name == "citation_accuracy":
             if task.get("requires_citations"):
-                has_citations: bool = "[" in output and "]" in output
-                return 1.0 if has_citations else 0.4
+                # Look for citation patterns like [1], [Author 2024], [source]
+                # Avoid false positives from code brackets or JSON
+                citation_pattern = r'\[\d+\]|\[[A-Z][a-z]+(?:\s+(?:et al\.?|&)\s+[A-Z][a-z]+)?\s*[\d,]+\]|\[(?:source|ref|cite)[^\]]*\]'
+                import re as _re
+                citations_found = _re.findall(citation_pattern, output)
+                if len(citations_found) >= 1:
+                    return 1.0
+                elif any(marker in output_lower for marker in ["according to", "cited in", "reported by"]):
+                    return 0.7
+                return 0.4
             return 0.8  # Citations not required
 
         elif dimension.name == "source_quality":
@@ -494,7 +502,10 @@ class ProductionMonitor:
     """
 
     def __init__(self, sample_rate: float = 0.01) -> None:
+        import random
+
         self.sample_rate: float = sample_rate
+        self._rng: random.Random = random.Random()
         self.samples: List[Dict[str, Any]] = []
         self.alert_thresholds: Dict[str, float] = {
             "pass_rate_warning": 0.85,
@@ -506,9 +517,7 @@ class ProductionMonitor:
 
         Use when: deciding at request time whether to evaluate this interaction.
         """
-        import random
-
-        return random.random() < self.sample_rate
+        return self._rng.random() < self.sample_rate
 
     def record_sample(
         self, query: str, output: str, evaluation: Dict[str, Any]

@@ -24,10 +24,9 @@ PRODUCTION NOTES:
   systems may benefit from fine-tuned classifiers or model-based detection.
 """
 
+import random
 import re
 from typing import Dict, List, Optional
-
-import numpy as np
 
 __all__ = [
     "measure_attention_distribution",
@@ -97,13 +96,13 @@ def _estimate_attention(
     interpretability libraries (e.g., TransformerLens).
     """
     if is_beginning:
-        return 0.8 + np.random.random() * 0.2
+        return 0.8 + random.random() * 0.2
     elif is_end:
-        return 0.7 + np.random.random() * 0.3
+        return 0.7 + random.random() * 0.3
     else:
         middle_progress = (position - total * 0.1) / (total * 0.8)
         base_attention = 0.3 * (1 - middle_progress) + 0.1 * middle_progress
-        return base_attention + np.random.random() * 0.1
+        return base_attention + random.random() * 0.1
 
 
 # ---------------------------------------------------------------------------

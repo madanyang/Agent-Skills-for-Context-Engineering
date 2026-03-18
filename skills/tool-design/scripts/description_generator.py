@@ -61,6 +61,19 @@ class ToolSpec(Protocol):
     errors: Sequence[Dict[str, Any]]
 
 
+@dataclass
+class _BuiltToolSpec:
+    """Concrete implementation of ToolSpec returned by ToolSchemaBuilder.build()."""
+
+    name: str
+    description: str
+    triggers: List[str]
+    examples: List[Dict[str, str]]
+    parameters: List[Dict[str, Any]]
+    returns: Dict[str, Any]
+    errors: List[Dict[str, Any]]
+
+
 # ---------------------------------------------------------------------------
 # Description Templates
 # ---------------------------------------------------------------------------
@@ -126,8 +139,11 @@ def generate_usage_context(tool_spec: ToolSpec) -> str:
     if tool_spec.examples:
         contexts.append("\n**Examples**:\n")
         for example in tool_spec.examples:
-            contexts.append(f"- Input: {example.input}")
-            contexts.append(f"  Output: {example.tool_call}")
+            if isinstance(example, dict):
+                contexts.append(f"- Input: {example.get('input', '')}")
+                contexts.append(f"  Output: {example.get('tool_call', '')}")
+            else:
+                contexts.append(f"- {example}")
 
     return "\n".join(contexts)
 
@@ -338,6 +354,8 @@ class ToolSchemaBuilder:
         self.parameters: List[Dict[str, Any]] = []
         self.returns: Optional[Dict[str, Any]] = None
         self.errors: List[Dict[str, str]] = []
+        self._triggers: List[str] = []
+        self._examples: List[Dict[str, str]] = []
 
     def set_description(self, short: str, detailed: str) -> "ToolSchemaBuilder":
         """Set short and detailed description sections.
@@ -407,30 +425,45 @@ class ToolSchemaBuilder:
         })
         return self
 
-    def build(self) -> Dict[str, Any]:
-        """Assemble and return the complete tool schema dictionary.
+    def build(self) -> "_BuiltToolSpec":
+        """Assemble and return the complete tool spec.
 
         Use when: the builder is fully configured and the schema is
-        ready for registration or serialization.
+        ready for registration, serialization, or passing to
+        ``generate_tool_description``.
+
+        Returns a ``_BuiltToolSpec`` object that satisfies the ``ToolSpec``
+        protocol, so it can be used directly with ``generate_tool_description``
+        and ``ToolDescriptionEvaluator``.
         """
-        return {
-            "name": self.name,
-            "description": self.description,
-            "detailed_description": self.detailed_description,
-            "parameters": {
-                "type": "object",
-                "properties": {
-                    p["name"]: {
-                        "type": p["type"],
-                        "description": p["description"],
-                    }
-                    for p in self.parameters
-                },
-                "required": [p["name"] for p in self.parameters if p["required"]],
-            },
-            "returns": self.returns,
-            "errors": self.errors,
-        }
+        return _BuiltToolSpec(
+            name=self.name,
+            description=self.detailed_description or self.description,
+            triggers=self._triggers,
+            examples=self._examples,
+            parameters=list(self.parameters),
+            returns=self.returns or {},
+            errors=list(self.errors),
+        )
+
+    def add_trigger(self, trigger: str) -> "ToolSchemaBuilder":
+        """Add an activation trigger for the tool.
+
+        Use when: documenting when agents should select this tool.
+        """
+        self._triggers.append(trigger)
+        return self
+
+    def add_example(
+        self, input_text: str, tool_call: str
+    ) -> "ToolSchemaBuilder":
+        """Add a usage example.
+
+        Use when: providing concrete input/output pairs that help agents
+        understand expected usage.
+        """
+        self._examples.append({"input": input_text, "tool_call": tool_call})
+        return self
 
 
 # ---------------------------------------------------------------------------
@@ -465,10 +498,23 @@ if __name__ == "__main__":
     builder.add_error("NOT_FOUND", "Customer ID not in datastore", "Verify ID format and retry")
     builder.add_error("INVALID_FORMAT", "ID does not match CUST-######", "Use CUST-###### pattern")
 
-    schema = builder.build()
+    spec = builder.build()
 
-    print("=== Built Schema ===")
-    print(json.dumps(schema, indent=2))
+    print("=== Built Spec ===")
+    print(f"Name: {spec.name}")
+    print(f"Parameters: {[p['name'] for p in spec.parameters]}")
+    print(f"Errors: {[e['code'] for e in spec.errors]}")
+
+    # Generate and evaluate description
+    description = generate_tool_description(spec)
+    print("\n=== Generated Description ===")
+    print(description)
+
+    evaluator = ToolDescriptionEvaluator()
+    scores = evaluator.evaluate(description, spec)
+    print("\n=== Evaluation Scores ===")
+    for criterion, score in scores.items():
+        print(f"  {criterion}: {score:.2f}")
 
     # Generate an error message example
     err_gen = ErrorMessageGenerator()
